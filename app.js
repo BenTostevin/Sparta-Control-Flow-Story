@@ -9,7 +9,7 @@ var possessions = {
 // var time = 0;
 
 alert('You have been set a challenge. The challenge is to travel from Sparta Global academy in Richmond to Paris as fast as possible.');
-alert('You start off with just your passport and an oyster card. In the break-out space, there are some more items which may help you on your journey. However, your bag is only big enough to carry five items.');
+alert('You start off with just your passport, a watch and an oyster card. In the break-out space, there are some more items which may help you on your journey. However, your bag is only big enough to carry five items.');
 
 var choice_of_items = ['phone', 'wallet', 'key', 'bike', 'coat', 'sleeping bag', 'blazer', 'toolbox', 'orange', 'sunglasses', 'map of London'];
 
@@ -29,7 +29,8 @@ item_counter + 0) {
   }
 }
 
-
+// check the wallet
+// check the blazer/coat
 
 alert('You set off...');
 
@@ -78,12 +79,36 @@ if (possessions.bag.includes('bike')) {
       var CostFromShop = parseFloat(prompt('... which costs...'));
       possessions.money = possessions.money - CostFromShop;
 
-      alert('The shop owner completes the transaction and explains that the nearest train station is just around the corner. You follow his directions and a train arrives promptly. You board the train.')
+      alert('The shop owner completes the transaction and explains that the nearest train station is just around the corner. You follow his directions and a train arrives promptly. You board the train.');
     }
   }
 } else {
-  alert('... and head to the train station on foot. You arrive at the station and get on the train.');
+
+  var running = prompt('... and head to the train station on foot. You check your watch. The next train is soon. Should you should pick up the pace to catch it?');
+  if (running === 'yes') {
+    possessions.have_passport = false;
+    alert('You break into a sprint to catch the train, bumping into and pushing through crowds of people travelling through the station. You jump onto the train just in time.');
+  } else {
+    alert('You decide not to run and walk to the station. You arrive at the station and board the next train.');
+  }
+
+  alert('You find a seat on the train.');
 }
+
+if (possessions.have_passport === false) {
+  alert('After several stops, a guard asks to see your ticket, as you reach into your pocket your stomach sinks as you realise that you are missing your passport. You must have dropped it somewhere.');
+  var transportOptions = prompt('You get off at the next stop and decide you must go back. The quickest way back is by taxi but it will be expensive. Should you get a taxi?');
+  if (transportOptions === 'yes') {
+    alert('You pay for a taxi back.');
+    possessions.money = possessions.money - 50;
+  } else {
+    alert('You take the long return journey on the train');
+  }
+  alert('Luckily, somebody had handed your passport into lost and found at Richmond station. You collect it and board the train again having wasted a lot of time.');
+}
+
+alert('You arrive at Waterloo.');
+
 
 console.log(possessions.bag);
 console.log(possessions.money)
