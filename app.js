@@ -12,7 +12,7 @@ var time = 0
 alert('You have been set a challenge. The challenge is to travel from Sparta Global academy in Richmond to Paris as fast as possible.');
 alert('You start off with just your passport, a watch and an oyster card. In the break-out space, there are some more items which may help you on your journey. However, your bag is only big enough to carry five items.');
 
-var choice_of_items = ['phone', 'coat', 'Apple watch' , 'bike', 'book', 'London guidebook', 'socks', 'Tesco meal deal'];
+var choice_of_items = ['phone', 'coat', 'Apple watch', 'wallet', 'bike', 'book', 'London guidebook', 'French dictionary', 'newspaper', 'socks', 'Tesco meal deal'];
 
 alert('You head to the break-out space and see a phone, a coat, a key, a fold-up bike, a coat, a sleeping bag, a book, a toolbox, a juicy orange, a London guidebook and a pair of sunglasses.');
 
@@ -90,7 +90,7 @@ if (possessions.bag.includes('bike')) {
       }
 
       var BuyFromShop = prompt('... and you purchase a...');
-      possessions.bag.pop(BuyFromShop);
+      possessions.bag.unshift(BuyFromShop);
 
       var CostFromShop = parseFloat(prompt('... which costs...'));
       possessions.money = possessions.money - CostFromShop;
@@ -180,22 +180,33 @@ if (possessions.eurostarTickets > 0) {
     alert('At the airport you eat your yum Tesco meal deal. You spill sauce on your shirt and have to buy a new one for £30. After chaging, you catch your flight to Paris smoothly.');
     possessions.money = possessions.money - 30;
   } else if (possessions.bag.length < 2) {
-    var airportPurchase = prompt('You arrive at the airport with time to spare. You decide that for the remainder of the trip, you will need to buy a...');
+    var airportPurchase = prompt('You arrive at the airport with time to spare. After checking in, you decide that for the flight, you will need to buy a...');
     possessions.bag.pop(airportPurchase);
     var airportPurchasePrice = parseInt(prompt('... which costs... '));
     possessions.money = possessions.money - airportPurchase;
+    possessions.bag.unshift(airportPurchase);
     alert('The flight is quick and you arrive in Paris before long.');
+
+  } else if (possessions.bag.includes('Apple watch')) {
+    alert('After checking in, go to buy food, which costs £10.');
+    possessions.money = possessions.money - 10;
+    alert('You arrive at your gate for your flight and take a seat and place your bag next to you. A mysterious looking man sits next to you. He notices your Apple watch and talks to you about it. You become uncomfortable and put in in your bag after the converstaion. The man gets up and walks away. You wait a few minutes before getting up to board your flight. You pick up your bag but it feels lighter. You check inside and see that your' + possessions.bag[0] + ' is missing. The presume the man must have stolen. You report the theft, but the police refuse to believe you. You board the plane a short while later and arrive in Paris soon after.');
+    possessions.bag.shift();
+
   } else {
     alert('There is a long delay. You board the flight in the middle of the night and arrive in Paris shortly after.');
   }
 
 
-
-
-
 } else {
-  alert('Since you do not have a Eurostar ticket or enough money for a flight, you must take a ferry to Paris.');
+  alert('The only method you can now afford is a ferry, you must take a ferry to Paris. You travel to Dover and buy a ticket for £30.');
+  possessions.money = possessions.money - 30;
+  var securityRandItem = possessions.bag[Math.floor((Math.random()*(possessions.bag.length-1)))];
+  alert('As you board the boat, you are stopped by security. They ask to search your bag. They pull out the ' + securityRandItem + '. They question you suspiciously about this item and claim that they are banned from the ferry. You explain that you need it. They suggest  subtly that they would accept a bribe You hand them £15 and they let you keep the ' + securityRandItem + '.');
+  possessions.money = possessions.money - 15;
 }
+
+
 
 
 
