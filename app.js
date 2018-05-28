@@ -1,5 +1,6 @@
 console.log('working');
 
+// what you have with you
 var possessions = {
   havePassport: true,
   bag: [],
@@ -21,15 +22,21 @@ var choice_of_items = ['bike', 'phone', 'Apple watch', 'wallet', 'book', 'French
 
 alert('You head to the break-out space and see a fold-up bike, a phone, an Apple watch, a wallet, a book, a French dictionary, a London guidebook, a coat, some socks and a Tesco meal deal');
 
-for (var item_counter = 0;
-item_counter < 5;
-item_counter + 0) {
+// the variable named 'itemCounter' counts how many things are in your bag. You must have five.
+for (var itemCounter = 0;
+itemCounter < 5;
+itemCounter + 0) {
   var chosenItem = prompt('You choose the...', choice_of_items);
   if (choice_of_items.includes(chosenItem)) {
-    possessions.bag.push(chosenItem);
-    item_counter++;
-  }
-  else {
+    if (possessions.bag.includes(chosenItem)) {
+      alert('You have already chosen this item. Choose a different one.')
+    // the two lines above prevent same item being chosen twice
+    } else {
+      possessions.bag.push(chosenItem);
+      itemCounter++;
+    // the line above adds 1 to 'itemCounter' after putting one item in your bag.
+    }
+  } else {
     alert('Item selected is not available. Try again...');
   }
 }
@@ -39,6 +46,7 @@ item_counter + 0) {
 if (possessions.bag.includes('coat')) {
   alert('You search the coat and find a Eurostar ticket.');
   possessions.eurostarTicket++;
+
 } else if (possessions.bag.includes('socks')) {
   alert('You pick up the socks and feel something inside one of them. You look inside and find a hidden Eurostar ticket. You pack the rest of your things.');
   possessions.eurostarTicket++;
@@ -53,7 +61,6 @@ if (possessions.bag.includes('wallet')) {
   alert('You search the wallet and find only small change adding up to 16p.');
   possessions.money += 0.16;
 }
-
 
 alert('You set off...');
 
@@ -102,12 +109,13 @@ if (possessions.bag.includes('bike')) {
       var BuyFromShop = prompt('... and you purchase a...');
       possessions.bag.unshift(BuyFromShop);
 
-      var CostFromShop = parseFloat(prompt('... which costs...'));
+      var CostFromShop = parseFloat(prompt('... which costs (enter as float including pence. Max: 55.00)...'));
       possessions.money -= CostFromShop;
+      // problem: could spend more money than you have.
     // -------------------- add a new item to bag end --------------------
 
       alert('The shop owner completes the transaction and explains that the nearest train station is just around the corner. You follow his directions and a train arrives promptly. You board the train.');
-      time += 60;
+      time += 15;
     }
   }
 } else {
@@ -133,10 +141,10 @@ if (possessions.havePassport === false) {
   if (transportOptions === 'yes') {
     alert('You pay £40 for a taxi back.');
     possessions.money -= 40;
-    time += 30;
+    time += 50;
   } else {
     alert('You take the long return journey on the train');
-    time += 60;
+    time += 80;
 
   }
   alert('Luckily, somebody had handed your passport into lost and found at Richmond station. You collect it and board the train again having wasted a lot of time.');
@@ -144,7 +152,9 @@ if (possessions.havePassport === false) {
 }
 
 alert('The train arrives at Waterloo.');
-if (possessions.eurostarTickets > 0) {
+
+// -------------------- Eurostar chapter start --------------------
+if (possessions.eurostarTicket > 0) {
   alert('You decide to use your ticket to catch the Eurostar from King\'s Cross St Pancrus, since that is the quickest way to Paris. You rush to the underground and jump on the train. You look out of the window as you stop at...');
 
   // -------------------- station cycle start --------------------
@@ -153,17 +163,16 @@ if (possessions.eurostarTickets > 0) {
   var getOffTrain = '';
   var stationNumber = 0;
   var stationLoopCounter = 0;
-  // PROBLEM: loop doesn't stop after 11 stations
   // note: had trouble with implementing a while loop so used a for loop instead
+  // problem: loop doesn't stop after 11 stations. I tried using an 'or' condidtion in the second arguement of the for loop, but it would not work.
   for (stationNumber = 0;
   getOffTrain === '';
   ) {
     getOffTrain = getOffTrain.replace(prompt('Press enter to get off the train at ' + (stations[stationNumber]) + ' or type anything to stay on the train'));
-    // ^ I would have preffered it to work differently. I tried making it so that if you leave the prompt blank, you stay on the train instead and type anything to get off. I didn't manage to get that to work and could only get this method to work.
+    // ^ I would have preffered the rule in the prompt to be different. I tried making it so that if you leave the prompt blank, you stay on the train instead and type anything to get off. I didn't manage to get that to work and could only get this method to work.
     stationNumber++;
   }
   // -------------------- station cycle end --------------------
-
 
 
   if (stationNumber === 7) {
@@ -210,8 +219,9 @@ if (possessions.eurostarTickets > 0) {
     }
   }
   // ^ The above section could be improved by incorporating a loop or statement of some kind, as some of the alerts have been repeated.
+// -------------------- Eurostar chapter end --------------------
 
-
+// -------------------- FLight chapter start --------------------
 } else if (possessions.money >= 100.00) {
   alert('You plan to catch a flight. You head to the airport and purchase a ticket for £50.');
   possessions.money -= 50;
@@ -223,11 +233,12 @@ if (possessions.eurostarTickets > 0) {
     time += 195;
 
 
-  } else if (possessions.bag.length < 3) {
+  } else if (possessions.bag.length < 5) {
+    // ^ This condition is only possible if you start with a bike and a phone or guidebook.
     var airportPurchase = prompt('You arrive at the airport with time to spare. After checking in, you decide that for the flight, you will need to buy a...');
     possessions.bag.pop(airportPurchase);
 
-    var airportPurchasePrice = parseInt(prompt('... which costs... '));
+    var airportPurchasePrice = parseFloat(prompt('... which costs... (enter as float including pence)'));
     possessions.money -= airportPurchase;
 
     alert('The flight is quick and you arrive in Paris before long.');
@@ -240,14 +251,15 @@ if (possessions.eurostarTickets > 0) {
     alert('You arrive at your gate for your flight and take a seat and place your bag next to you. A mysterious looking man sits next to you. He notices your Apple watch and talks to you about it. You become uncomfortable and put in in your bag after the converstaion. The man gets up and walks away. You wait a few minutes before getting up to board your flight. You pick up your bag but it feels lighter. You check inside and see that your' + possessions.bag[0] + ' is missing. The presume the man must have stolen. You report the theft, but the police refuse to believe you. You board the plane a short while later and arrive in Paris soon after.');
     possessions.bag.shift();
     // the shift function selects the first item in the array which is equivilant to array[0]
-    time += 195;
+    time += 215;
 
   } else {
     alert('There is a long delay. You board the flight in the middle of the night and arrive in Paris shortly after.');
-    time += 310;
+    time += 350;
   }
+// -------------------- Flight chapter end --------------------
 
-
+// -------------------- Ferry chapter start --------------------
 } else {
   alert('The only method you can now afford is a ferry, you must take a ferry to Paris. You travel to Dover and buy a ticket for £30.');
   possessions.money -= 30;
@@ -260,22 +272,37 @@ if (possessions.eurostarTickets > 0) {
   possessions.money -= 15;
   time += 310;
 }
+// -------------------- Ferry chapter end --------------------
 
-console.log(possessions.bag);
-console.log(possessions.money);
-console.log(possessions.eurostarTicket);
-console.log(time);
+// -------------------- Dictionary chapter start --------------------
+if (possessions.bag.includes('French dictionary') && possessions.money > 5) {
+  alert('You get a taxi but the driver does not speak English, so you use your French dictionary to translate. The driver then understands you and takes you to your destination. It costs the equivilant of £5.');
+  time += 10;
+  possessions.money -= 5;
 
+} else if (possessions.money > 5) {
+  alert('You get a taxi but the driver does not speak English, you struggle to communicate with the driver properly and it takes a long time to reach your destination. It costs the equivilant of £5.');
+  time += 30;
+  possessions.money -= 5;
+
+} else {
+  alert('You walk to your destination, which takes a long time');
+  time += 60;
+}
+// -------------------- dictionary chapter end --------------------
+
+// -------------------- evaluate score start --------------------
 switch (true) {
-  case (time < 250):
+  case (time < 210):
     alert('You make in to the meeting point in record time. Congratulations!');
     break;
-  case (time >= 250 && time < 350):
+  case (time >= 210 && time < 300):
     alert('You make in to the meeting point fairly fast. Well done. You win a Revs free drinks voucher.');
     break;
-  case (time >= 350 && time < 450):
+  case (time >= 300 && time < 450):
     alert('You make in to the meeting point a bit late. You could have done better. Better luck next time.');
     break;
-  case (time >= 450):
+  case (time >= 440):
     alert('You make it to the meeting point extremely late! You have unfortunatley failed and must make your own way back to the UK.');
 }
+// -------------------- evaluate score end --------------------
