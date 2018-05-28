@@ -3,8 +3,8 @@ console.log('working');
 var possessions = {
   havePassport: true,
   bag: [],
-  money: 100.00,
-  eurostarTicket: null
+  eurostarTicket: 0,
+  money: 100.00
 };
 
 var time = 0
@@ -32,10 +32,10 @@ item_counter + 0) {
 
 if (possessions.bag.includes('coat')) {
   alert('You search the coat and find a Eurostar ticket.');
-  possessions.eurostarTicket = possessions.eurostarTicket + 1;
+  possessions.eurostarTicket++;
 } else if (possessions.bag.includes('socks')) {
   alert('You pick up the socks and feel something inside one of them. You look inside and find a hidden Eurostar ticket. You pack the rest of your things.');
-  possessions.eurostarTicket = possessions.eurostarTicket + 1;
+  possessions.eurostarTicket++;
 }
 
 if (possessions.bag.includes('book')) {
@@ -56,9 +56,9 @@ alert('You set off...');
 if (possessions.bag.includes('bike')) {
   alert('...and begin to cycle to the train station. There are roadworks on the high street though. You follow the rest of the traffic winding through oneway systems in busy rushhour traffic. Eventually you find yourself in an area you don\'t recignise nd have no idea where you are.');
   if (possessions.bag.includes('phone') || possessions.bag.includes('London guidebook')) {
-    if possessions.bag.includes('phone') {
+    if (possessions.bag.includes('phone')) {
       alert('You use the map on your phone to find the nearest station to you.');
-    } else if possessions.bag.includes('London guidebook') {
+    } else if (possessions.bag.includes('London guidebook')) {
       alert('You use the map in your guidebook to find the nearest station to you.');
     }
     alert('The nearest station is only five minutes away by bike.');
@@ -124,7 +124,7 @@ if (possessions.havePassport === false) {
 }
 
 alert('The train arrives at Waterloo.');
-if (possessions.eurostarTickets !== null) {
+if (possessions.eurostarTickets > 0) {
   alert('You decide to use your ticket to catch the Eurostar from King\'s Cross St Pancrus, since that is the quickest way to Paris. You rush to the underground and jump on the train. You look out of the window as you stop at...');
 
   var stations = ['Embankment', 'Charing Cross', 'Leicester Square', 'Covent Garden', 'Holburn', 'Russell Square', 'King\'s Cross St Pancras', 'Caledonian Road', 'Holloway Road', 'Arsenal', 'Finsbury Park'];
@@ -176,13 +176,13 @@ if (possessions.eurostarTickets !== null) {
 } else if (possessions.money >= 100.00) {
   alert('You plan to catch a flight. You head to the airport and purchase a ticket for £50.');
   possessions.money = possessions.money - 50;
-  if possessions.bag.include('Tesco meal deal') {
+  if (possessions.bag.includes('Tesco meal deal')) {
     alert('At the airport you eat your yum Tesco meal deal. You spill sauce on your shirt and have to buy a new one for £30. After chaging, you catch your flight to Paris smoothly.');
     possessions.money = possessions.money - 30;
-  } else if possessions.bag.length < 3 {
+  } else if (possessions.bag.length < 2) {
     var airportPurchase = prompt('You arrive at the airport with time to spare. You decide that for the remainder of the trip, you will need to buy a...');
     possessions.bag.pop(airportPurchase);
-    var airportPurchasePrice = parseInt(prompt('... which costs... ');
+    var airportPurchasePrice = parseInt(prompt('... which costs... '));
     possessions.money = possessions.money - airportPurchase;
     alert('The flight is quick and you arrive in Paris before long.');
   } else {
@@ -191,8 +191,6 @@ if (possessions.eurostarTickets !== null) {
 
 
 
-  }
-  }
 
 
 } else {
